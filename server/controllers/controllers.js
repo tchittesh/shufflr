@@ -30,7 +30,7 @@ async function verifyEmail(req, res) {
 async function createAccount(req, res) {
   const valid = await validationSchema.isValid(req.body);
   if (!valid) {
-    return res.status(400);
+    return res.status(400).end();
   }
   const exists = await account.emailExists(req.body.email);
   if (exists) {
@@ -57,5 +57,49 @@ async function createAccount(req, res) {
   });
 }
 
+async function forgotPassword(req, res) {
+  const exists = await account.emailExists(req.body.email);
+  if (!exists) {
+    return res.status(200).end();
+  }
+  const resetPasswordToken =
+    await account.setResetPasswordToken(req.body.email);
+  const resetPasswordUrl =
+    `${process.env.FRONTEND_BASE_URL}/reset-password/${resetPasswordToken}`;
+  const emailContent = `
+    You're receiving this e-mail because you or someone else 
+    has requested a password reset for your user account.
+
+    Click the link below to reset your password (expires in 15 minutes):
+    ${resetPasswordUrl}
+    
+    If you did not request a password reset you can safely ignore this email.
+  `;
+  await email.sendEmail({
+    from: process.env.EMAIL,
+    to: req.body.email,
+    subject: 'Reset Password Link for Shufflr',
+    text: emailContent,
+  });
+  return res.status(200).end();
+}
+
+async function resetPassword(req, res) {
+  const [foundToken, resetPasswordExpiration] =
+    await account.getResetPasswordTokenExpiration(req.body.token);
+  if (!foundToken) {
+    return res.status(400).json({body: 'Invalid reset password token'});
+  }
+  const now = new Date();
+  const expiration = new Date(Date.parse(resetPasswordExpiration));
+  if (now.getTime() > expiration.getTime()) {
+    return res.status(400).json({body: 'Reset password token expired'});
+  }
+  await account.changePassword(req.body.token, req.body.password);
+  return res.status(200).end();
+}
+
 module.exports.createAccount = handleErrors(createAccount);
 module.exports.verifyEmail = handleErrors(verifyEmail);
+module.exports.forgotPassword = handleErrors(forgotPassword);
+module.exports.resetPassword = handleErrors(resetPassword);

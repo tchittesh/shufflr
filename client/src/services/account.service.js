@@ -16,15 +16,24 @@ function verifyEmail(token) {
   return axios.post(`${baseUrl}/api/verify-email/${token}`);
 }
 
+function forgotPassword(email) {
+  return axios.post(`${baseUrl}/api/forgot-password/`, { email });
+}
+
+function resetPassword(params) {
+  return axios.post(`${baseUrl}/api/reset-password/`, params);
+}
+
+// eslint-disable-next-line import/prefer-default-export
 export const accountService = {
   login,
   // logout,
   // refreshToken,
   createAccount,
   verifyEmail,
-  // forgotPassword,
+  forgotPassword,
   // validateResetToken,
-  // resetPassword,
+  resetPassword,
   // getAll,
   // getById,
   // create,

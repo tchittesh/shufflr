@@ -6,7 +6,7 @@ import { accountService } from '../services';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '' };
+    this.state = { email: '', password: '', message: '' };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -29,11 +29,14 @@ class Login extends Component {
       .then((response) => {
         console.log(response);
         history.push('/chat');
+      })
+      .catch(() => {
+        this.setState({ message: 'Login failed.' });
       });
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, message } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -47,6 +50,9 @@ class Login extends Component {
         </label>
         <br />
         <input type="submit" value="Log In" />
+        <div>
+          {message}
+        </div>
       </form>
     );
   }

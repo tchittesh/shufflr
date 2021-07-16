@@ -9,5 +9,7 @@ router.post(
     (req, res) => res.status(200).json({body: 'Hello from the server!'}));
 router.post('/create-account', controllers.createAccount);
 router.post('/verify-email/:emailToken', controllers.verifyEmail);
+router.post('/forgot-password', controllers.forgotPassword);
+router.post('/reset-password', controllers.resetPassword);
 
 module.exports = router;
