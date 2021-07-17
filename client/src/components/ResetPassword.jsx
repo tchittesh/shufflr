@@ -2,16 +2,24 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { accountService } from '../services';
 
 class ResetPassword extends Component {
   constructor(props) {
     super(props);
     const { match } = this.props;
-    this.state = { password: '', message: '', token: match.params.token };
+    this.state = { password: '', status: ['', ''], token: match.params.token };
 
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetStatus = this.resetStatus.bind(this);
 
     this.validationSchema = Yup.object().shape({
       token: Yup.string(),
@@ -34,31 +42,57 @@ class ResetPassword extends Component {
         accountService.resetPassword(form)
           .then((response) => {
             console.log(response);
-            this.setState({ message: 'Password changed.' });
+            this.setState({ status: ['Password changed.', 'success'] });
           })
           .catch(() => {
-            this.setState({ message: 'Failed to change password.' });
+            this.setState({ status: ['Failed to change password.', 'danger'] });
           });
       })
       .catch((err) => {
-        this.setState({ message: err.errors });
+        this.setState({ status: [err.errors, 'danger'] });
       });
   }
 
+  resetStatus() {
+    this.setState({ status: ['', ''] });
+  }
+
   render() {
-    const { password, message } = this.state;
+    const { password, status } = this.state;
+    const [message, alertType] = status;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          New Password:
-          <input type="text" value={password} onChange={this.handlePasswordChange} />
-        </label>
-        <br />
-        <input type="submit" value="Set New Password" />
-        <div>
-          {message}
-        </div>
-      </form>
+      <Container className="min-vh-100">
+        <Row className="min-vh-100 justify-content-center align-items-center">
+          <Col md="5">
+            <Card className="text-center">
+              <Card.Header as="h5">Reset Password</Card.Header>
+              <Card.Body>
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Floating>
+                    <Form.Control
+                      id="floatingPasswordCustom"
+                      type="password"
+                      placeholder="Password"
+                      onChange={this.handlePasswordChange}
+                      value={password}
+                    />
+                    <label htmlFor="floatingPasswordCustom">Password</label>
+                  </Form.Floating>
+                  <Button variant="primary" type="submit" className="topPadded">
+                    Reset Password
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+            {message !== ''
+              && (
+              <Alert variant={alertType} dismissible className="topPadded" onClose={this.resetStatus}>
+                {message}
+              </Alert>
+              )}
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
