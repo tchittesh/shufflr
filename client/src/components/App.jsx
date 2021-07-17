@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Login from './Login';
 import CreateAccount from './CreateAccount';
@@ -14,6 +15,13 @@ class App extends PureComponent {
   render() {
     return (
       <div className="App">
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossOrigin="anonymous"
+        />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Amaranth" />
         <Router>
           <Switch>
             <Route exact path="/" render={() => (<Redirect to="/login" />)} />

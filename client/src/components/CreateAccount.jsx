@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import * as Yup from 'yup';
 import { withRouter } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 import { accountService } from '../services';
 
 class CreateAccount extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', status: '' };
+    this.state = { email: '', password: '', status: ['', ''] };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetStatus = this.resetStatus.bind(this);
 
     this.validationSchema = Yup.object().shape({
       email: Yup.string()
@@ -41,38 +49,67 @@ class CreateAccount extends Component {
         accountService.createAccount(form)
           .then((response) => {
             console.log(response);
-            this.setState({ status: 'Registration successful, please check your email for verification instructions' });
+            this.setState({ status: ['Registration successful, please check your email for verification instructions', 'success'] });
           })
           .catch((error) => {
-            this.setState({ status: `Backend error, ${error}` });
+            this.setState({ status: [`Backend error, ${error}`, 'danger'] });
           });
       })
       .catch((err) => {
-        this.setState({ status: err.errors });
+        this.setState({ status: [err.errors, 'danger'] });
       });
+  }
+
+  resetStatus() {
+    this.setState({ status: ['', ''] });
   }
 
   render() {
     const { email, password, status } = this.state;
+    const [message, alertType] = status;
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Email Address:
-            <input type="text" value={email} onChange={this.handleEmailChange} />
-          </label>
-          <br />
-          <label>
-            Password:
-            <input type="text" value={password} onChange={this.handlePasswordChange} />
-          </label>
-          <br />
-          <input type="submit" value="Create Account" />
-        </form>
-        <div>
-          {status}
-        </div>
-      </div>
+      <Container className="min-vh-100">
+        <Row className="min-vh-100 justify-content-center align-items-center">
+          <Col md="5">
+            <Card className="text-center">
+              <Card.Header as="h5">Create Account</Card.Header>
+              <Card.Body>
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Floating className="mb-3">
+                    <Form.Control
+                      id="floatingInputCustom"
+                      type="email"
+                      placeholder="name@example.com"
+                      onChange={this.handleEmailChange}
+                      value={email}
+                    />
+                    <label htmlFor="floatingInputCustom">Email address</label>
+                  </Form.Floating>
+                  <Form.Floating>
+                    <Form.Control
+                      id="floatingPasswordCustom"
+                      type="password"
+                      placeholder="Password"
+                      onChange={this.handlePasswordChange}
+                      value={password}
+                    />
+                    <label htmlFor="floatingPasswordCustom">Password</label>
+                  </Form.Floating>
+                  <Button variant="primary" type="submit" className="topPadded">
+                    Sign up!
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+            {message !== ''
+              && (
+              <Alert variant={alertType} dismissible className="topPadded" onClose={this.resetStatus}>
+                {message}
+              </Alert>
+              )}
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

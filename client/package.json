@@ -4,10 +4,13 @@
   "private": false,
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^5.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-bootstrap": "^2.0.0-beta.3",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.2.2",
+    "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "rxjs": "^7.2.0",
@@ -35,7 +38,6 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.30.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.4.1",
