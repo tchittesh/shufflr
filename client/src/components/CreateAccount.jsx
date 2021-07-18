@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Yup from 'yup';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -8,6 +8,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
 import { accountService } from '../services';
+
+import './CreateAccount.css';
 
 class CreateAccount extends Component {
   constructor(props) {
@@ -92,9 +94,18 @@ class CreateAccount extends Component {
                 <label htmlFor="floatingPasswordCustom">Password</label>
               </Form.Floating>
               <Button variant="primary" type="submit" className="topPadded">
-                Sign up!
+                Sign up
               </Button>
             </Form>
+          </Card.Body>
+        </Card>
+        <Card className="text-center topMargin">
+          <Card.Body>
+            <Link to="login">
+              <Button variant="link">
+                Already have an account?
+              </Button>
+            </Link>
           </Card.Body>
         </Card>
         {message !== ''

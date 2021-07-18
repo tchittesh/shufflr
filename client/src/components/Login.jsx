@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
@@ -75,15 +76,37 @@ class Login extends Component {
                 />
                 <label htmlFor="floatingPasswordCustom">Password</label>
               </Form.Floating>
-              <Button variant="primary" type="submit" className="topPadded">
+              <Button variant="primary" className="topMargin" type="submit">
                 Log In
               </Button>
             </Form>
           </Card.Body>
         </Card>
+        <Card className="text-center topMargin">
+          <Card.Body>
+            <Row className="align-items-center justify-content-center">
+              <Col>
+                <Link to="create-account">
+                  <Button variant="link">
+                    Don&apos;t have an account?
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+            <Row className="align-items-center justify-content-center">
+              <Col>
+                <Link to="forgot-password">
+                  <Button variant="link">
+                    Forgot your password?
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
         {failed
               && (
-              <Alert variant="danger" dismissible className="topPadded" onClose={this.resetFailed}>
+              <Alert variant="danger" dismissible className="topPadding" onClose={this.resetFailed}>
                 Login failed.
               </Alert>
               )}

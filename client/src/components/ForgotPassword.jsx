@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -60,6 +60,15 @@ class ForgotPassword extends Component {
                 Submit
               </Button>
             </Form>
+          </Card.Body>
+        </Card>
+        <Card className="text-center topMargin">
+          <Card.Body>
+            <Link to="login">
+              <Button variant="link">
+                Back to login
+              </Button>
+            </Link>
           </Card.Body>
         </Card>
         {message !== ''
