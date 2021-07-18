@@ -1,0 +1,20 @@
+.title {
+    color: white;
+    text-align: center;
+    transform: translate(0%, -250%);
+    text-shadow: 2px 2px indigo;
+}
+
+.button-link {
+    color: white;
+    text-align: center;
+    padding: 5px;
+    transform: translate(0%, -100%);
+}
+
+.intro {
+    color: white;
+    text-align: center;
+    transform: translate(0%, -250%);
+    text-shadow: 2px 2px indigo;
+}

@@ -1,5 +1,6 @@
 $theme-colors: (
     "primary": indigo,
+    "purple": purple,
 );
 
 $link-decoration: none !default;
@@ -7,13 +8,3 @@ $link-color: lighten(blueviolet, 10%);
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
-
-$custom-color-1:blueviolet;
-
-// .btn-link {
-//     @include button-variant($custom-color-1, darken($custom-color-1, 7.5%), darken($custom-color-1, 10%), lighten($custom-color-1,5%), lighten($custom-color-1, 10%), darken($custom-color-1,30%));
-// }
-    
-.btn-outline-link {
-    @include button-outline-variant($custom-color-1, #222222, lighten($custom-color-1,5%), $custom-color-1);
-}
