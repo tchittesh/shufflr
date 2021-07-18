@@ -1,0 +1,8 @@
+.vh-15 {
+  height: 15vh;
+}
+
+.img-fluid-vertical {
+  max-height: 100%;
+  width: auto;
+}

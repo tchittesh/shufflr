@@ -6,9 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { accountService } from '../services';
 
 class ResetPassword extends Component {
@@ -61,38 +59,34 @@ class ResetPassword extends Component {
     const { password, status } = this.state;
     const [message, alertType] = status;
     return (
-      <Container className="min-vh-100">
-        <Row className="min-vh-100 justify-content-center align-items-center">
-          <Col md="5">
-            <Card className="text-center">
-              <Card.Header as="h5">Reset Password</Card.Header>
-              <Card.Body>
-                <Form onSubmit={this.handleSubmit}>
-                  <Form.Floating>
-                    <Form.Control
-                      id="floatingPasswordCustom"
-                      type="password"
-                      placeholder="Password"
-                      onChange={this.handlePasswordChange}
-                      value={password}
-                    />
-                    <label htmlFor="floatingPasswordCustom">Password</label>
-                  </Form.Floating>
-                  <Button variant="primary" type="submit" className="topPadded">
-                    Reset Password
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Card>
-            {message !== ''
+      <Col md="5">
+        <Card className="text-center">
+          <Card.Header as="h5">Reset Password</Card.Header>
+          <Card.Body>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Floating>
+                <Form.Control
+                  id="floatingPasswordCustom"
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handlePasswordChange}
+                  value={password}
+                />
+                <label htmlFor="floatingPasswordCustom">Password</label>
+              </Form.Floating>
+              <Button variant="primary" type="submit" className="topPadded">
+                Reset Password
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+        {message !== ''
               && (
               <Alert variant={alertType} dismissible className="topPadded" onClose={this.resetStatus}>
                 {message}
               </Alert>
               )}
-          </Col>
-        </Row>
-      </Container>
+      </Col>
     );
   }
 }

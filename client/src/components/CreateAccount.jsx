@@ -5,9 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 
 import { accountService } from '../services';
 
@@ -68,48 +66,44 @@ class CreateAccount extends Component {
     const { email, password, status } = this.state;
     const [message, alertType] = status;
     return (
-      <Container className="min-vh-100">
-        <Row className="min-vh-100 justify-content-center align-items-center">
-          <Col md="5">
-            <Card className="text-center">
-              <Card.Header as="h5">Create Account</Card.Header>
-              <Card.Body>
-                <Form onSubmit={this.handleSubmit}>
-                  <Form.Floating className="mb-3">
-                    <Form.Control
-                      id="floatingInputCustom"
-                      type="email"
-                      placeholder="name@example.com"
-                      onChange={this.handleEmailChange}
-                      value={email}
-                    />
-                    <label htmlFor="floatingInputCustom">Email address</label>
-                  </Form.Floating>
-                  <Form.Floating>
-                    <Form.Control
-                      id="floatingPasswordCustom"
-                      type="password"
-                      placeholder="Password"
-                      onChange={this.handlePasswordChange}
-                      value={password}
-                    />
-                    <label htmlFor="floatingPasswordCustom">Password</label>
-                  </Form.Floating>
-                  <Button variant="primary" type="submit" className="topPadded">
-                    Sign up!
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Card>
-            {message !== ''
+      <Col md="5">
+        <Card className="text-center">
+          <Card.Header as="h5">Create Account</Card.Header>
+          <Card.Body>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Floating className="mb-3">
+                <Form.Control
+                  id="floatingInputCustom"
+                  type="email"
+                  placeholder="name@example.com"
+                  onChange={this.handleEmailChange}
+                  value={email}
+                />
+                <label htmlFor="floatingInputCustom">Email address</label>
+              </Form.Floating>
+              <Form.Floating>
+                <Form.Control
+                  id="floatingPasswordCustom"
+                  type="password"
+                  placeholder="Password"
+                  onChange={this.handlePasswordChange}
+                  value={password}
+                />
+                <label htmlFor="floatingPasswordCustom">Password</label>
+              </Form.Floating>
+              <Button variant="primary" type="submit" className="topPadded">
+                Sign up!
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+        {message !== ''
               && (
               <Alert variant={alertType} dismissible className="topPadded" onClose={this.resetStatus}>
                 {message}
               </Alert>
               )}
-          </Col>
-        </Row>
-      </Container>
+      </Col>
     );
   }
 }
