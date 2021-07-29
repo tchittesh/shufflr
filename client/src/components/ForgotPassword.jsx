@@ -73,7 +73,7 @@ class ForgotPassword extends Component {
         </Card>
         {message !== ''
               && (
-              <Alert variant="success" dismissible className="topPadded" onClose={this.resetMessage}>
+              <Alert variant="success" dismissible className="topMargin" onClose={this.resetMessage}>
                 {message}
               </Alert>
               )}

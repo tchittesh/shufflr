@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 
 import { accountService } from '../services';
 
-import './CreateAccount.css';
+import './base.css';
 
 class CreateAccount extends Component {
   constructor(props) {
@@ -93,7 +93,7 @@ class CreateAccount extends Component {
                 />
                 <label htmlFor="floatingPasswordCustom">Password</label>
               </Form.Floating>
-              <Button variant="primary" type="submit" className="topPadded">
+              <Button variant="primary" type="submit" className="topMargin">
                 Sign up
               </Button>
             </Form>
@@ -110,7 +110,7 @@ class CreateAccount extends Component {
         </Card>
         {message !== ''
               && (
-              <Alert variant={alertType} dismissible className="topPadded" onClose={this.resetStatus}>
+              <Alert variant={alertType} dismissible className="topMargin" onClose={this.resetStatus}>
                 {message}
               </Alert>
               )}

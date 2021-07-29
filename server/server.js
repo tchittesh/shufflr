@@ -7,6 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const mysqlHelper = require('./services/mysql');
 const auth = require('./services/auth');
+const chatSocket = require('./services/chat');
 
 // Create a new express application called 'app'
 const app = express();
@@ -21,13 +22,15 @@ app.use((req, res, next) => {
   next();
 });
 
-// Use passport session-based middleware
-app.use(session({
+const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   store: mysqlHelper.sessionStore,
   resave: false,
   saveUninitialized: false,
-}));
+});
+
+// Use passport session-based middleware
+app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 auth.initPassport();
@@ -39,23 +42,12 @@ app.use(express.urlencoded({
 }));
 
 // Set up the CORs middleware
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000', credentials: true}));
 
 // Require Route
 const api = require('./routes/routes');
 // Configure app to use route
 app.use('/api/', api);
-
-// This middleware informs the express application to
-// serve our compiled React files
-if (process.env.NODE_ENV === 'production' ||
-    process.env.NODE_ENV === 'staging') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-
-  app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-}
 
 // Catch any bad requests
 app.get('*', (req, res) => {
@@ -63,4 +55,7 @@ app.get('*', (req, res) => {
 });
 
 // Set our server to listen on the port defiend by our port variable
-app.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
+const server =
+  app.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
+
+chatSocket.initialize(server, sessionMiddleware);

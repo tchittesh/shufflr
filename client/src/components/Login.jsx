@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
 import { accountService } from '../services';
-import './Login.css';
+import './base.css';
 
 class Login extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ class Login extends Component {
     accountService.login({ email, password })
       .then((response) => {
         console.log(response);
-        history.push('/chat');
+        history.push('/home');
       })
       .catch(() => {
         this.setState({ failed: true });
@@ -106,7 +106,7 @@ class Login extends Component {
         </Card>
         {failed
               && (
-              <Alert variant="danger" dismissible className="topPadding" onClose={this.resetFailed}>
+              <Alert variant="danger" dismissible className="topMargin" onClose={this.resetFailed}>
                 Login failed.
               </Alert>
               )}

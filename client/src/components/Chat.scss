@@ -1,0 +1,128 @@
+$purple1: rgb(235, 215, 254);
+$purple2: rgb(186, 123, 252);
+
+$translucentWhite: rgba(0, 0, 0, 0.3);
+
+$backgroundColor: #282b34;
+$greyColor: #2d343e;
+$redColor: #ff1e56;
+$yellowColor: #ffac41;
+
+@mixin scrollbars(
+  $size,
+  $foreground-color,
+  $background-color: mix($foreground-color, white, 50%)
+) {
+  // For Google Chrome
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+    border-radius: 10px;
+  }
+
+  // For Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+.chat {
+  height: 100%;
+  background-color: $translucentWhite;
+  padding: 1rem;
+  .user-name {
+    text-align: start;
+    width: 100%;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    h4 {
+      margin-left: 2rem;
+      display: inline;
+      color: white;
+      font-weight: 300;
+    }
+  }
+  .chat-message {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    height: 75%;
+    overflow-y: auto;
+    @include scrollbars(5px, $purple1, indigo);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-content: flex-start;
+
+    .message {
+      margin-left: 0px;
+      margin-right: auto;
+      max-width: 500px;
+      padding-left: 0.5rem;
+      p {
+        font-weight: 300;
+        background-color: $purple1;
+        padding: 0.75rem;
+        border-radius: 0px 10px 10px 10px;
+        word-break: break-word;
+        color: black;
+      }
+    }
+    .mess-right {
+      margin-left: auto;
+      margin-right: 0px;
+      max-width: 500px;
+      padding-right: 0.5rem;
+      p {
+        font-weight: 300;
+        background-color: $purple2;
+        padding: 0.75rem;
+        border-radius: 10px 0px 10px 10px;
+        word-break: break-word;
+        text-align: end;
+        color: white;
+      }
+    }
+  }
+
+  .send {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    input {
+      ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: white;
+        opacity: 1; /* Firefox */
+      }
+      color: white;
+      width: 80%;
+      text-decoration: none;
+      background-color: $purple2;
+      border: none;
+      padding-left: 1rem;
+      border-radius: 5px 0px 0px 5px;
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      color: white;
+      width: 20%;
+      border: none;
+      background-color: indigo;
+      border-radius: 0px 5px 5px 0px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

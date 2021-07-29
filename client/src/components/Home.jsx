@@ -1,31 +1,123 @@
-import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner';
 
-import './Home.css';
+import Chat from './Chat';
+import { accountService, socket } from '../services';
+import './base.css';
 
-class Home extends PureComponent {
+class Home extends Component {
+  static startSearch() {
+    socket.emit('search');
+  }
+
+  static cancelSearch() {
+    socket.emit('cancel');
+  }
+
+  static stopChat() {
+    socket.emit('exit');
+  }
+
+  constructor(props) {
+    super(props);
+    this.statusSet = {
+      DEFAULT: 'default',
+      SEARCHING: 'searching',
+      CHATTING: 'chatting',
+    };
+    this.state = { status: this.statusSet.DEFAULT, matchedEmail: null };
+  }
+
+  componentDidMount() {
+    socket.on('matchFound', ({ email }) => {
+      const { status } = this.state;
+      console.log('received match with', email, status);
+      this.setState({ status: this.statusSet.CHATTING, matchedEmail: email });
+    });
+    socket.on('searchReceived', () => {
+      this.setState({ status: this.statusSet.SEARCHING });
+    });
+    socket.on('cancelReceived', () => {
+      this.setState({ status: this.statusSet.DEFAULT });
+    });
+    socket.on('exitReceived', () => {
+      this.setState({ status: this.statusSet.DEFAULT });
+    });
+    socket.on('partnerDisconnected', () => {
+      this.setState({ status: this.statusSet.DEFAULT });
+    });
+  }
+
+  componentWillUnmount() {
+    socket.removeAllListeners('matchFound');
+    socket.removeAllListeners('searchReceived');
+    socket.removeAllListeners('cancelReceived');
+    socket.removeAllListeners('exitReceived');
+    socket.removeAllListeners('partnerDisconnected');
+  }
+
   render() {
-    return (
-      <div>
-        <h1 className="title">Welcome to Shufflr!</h1>
-        <h5 className="intro">Shufflr is an app that allows students to have text conversations</h5>
-        <h5 className="intro">with random peers (similar to Omegle), restricted to a college environment.</h5>
-        <h5 className="intro">We want to help better connect our college community during times where we cannot</h5>
-        <h5 className="intro">meet in person, either due to COVID, or during holiday seasons.</h5>
-        <Col className="text-center">
-          <Link to="login">
-            <Button className="button-link" variant="purple">Log In</Button>
-            {' '}
-          </Link>
-          <Link to="create-account">
-            <Button className="button-link" variant="purple">Create Account</Button>
-          </Link>
-        </Col>
-      </div>
-    );
+    const email = accountService.emailAddress;
+
+    if (!email) {
+      console.log('no email');
+      const { history } = this.props;
+      history.push('/login');
+    }
+
+    const { status, matchedEmail } = this.state;
+    console.log(matchedEmail);
+
+    switch (status) {
+      case this.statusSet.DEFAULT:
+        return (
+          <Col md="5" className="justify-content-center align-items-center">
+            <h1 className="center-text white-text">
+              Welcome,
+              {' '}
+              {email}
+            </h1>
+            <Row>
+              <Button variant="primary" type="button" className="topPadded" onClick={Home.startSearch}>
+                Start Chat
+              </Button>
+            </Row>
+          </Col>
+        );
+      case this.statusSet.SEARCHING:
+        return (
+          <Col md="5" className="justify-content-center align-items-center">
+            <h1 className="center-text white-text">
+              Welcome,
+              {' '}
+              {email}
+            </h1>
+            <Row>
+              <Button variant="primary" type="button" className="topPadded" onClick={Home.cancelSearch}>
+                <Spinner animation="border" variant="light" />
+                Cancel
+              </Button>
+            </Row>
+          </Col>
+        );
+      case this.statusSet.CHATTING:
+        return (
+          <Col md="8" className="justify-content-center align-items-center">
+            <Chat partner={matchedEmail} onTermination={Home.stopChat} />
+          </Col>
+        );
+      default:
+        throw Error('Invalid status');
+    }
   }
 }
+Home.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  history: PropTypes.object.isRequired,
+};
 
 export default Home;

@@ -74,7 +74,7 @@ class ResetPassword extends Component {
                 />
                 <label htmlFor="floatingPasswordCustom">Password</label>
               </Form.Floating>
-              <Button variant="primary" type="submit" className="topPadded">
+              <Button variant="primary" type="submit" className="topMargin">
                 Reset Password
               </Button>
             </Form>
@@ -82,7 +82,7 @@ class ResetPassword extends Component {
         </Card>
         {message !== ''
               && (
-              <Alert variant={alertType} dismissible className="topPadded" onClose={this.resetStatus}>
+              <Alert variant={alertType} dismissible className="topMargin" onClose={this.resetStatus}>
                 {message}
               </Alert>
               )}

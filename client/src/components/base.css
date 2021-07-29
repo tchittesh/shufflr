@@ -1,0 +1,27 @@
+.main-content {
+    margin-top: 15vh;
+}
+
+.vh-15 {
+    height: 15vh;
+}
+
+.min-vh-85 {
+    min-height: 85vh;
+}
+
+.vh-80 {
+    height: 80vh;
+}
+
+.topMargin {
+    margin-top: 1em;
+}
+  
+.center-text {
+    text-align: center;
+}
+
+.white-text {
+    color: white;
+}
