@@ -46,11 +46,15 @@ async function createAccount(req, res) {
     Please click the below link to verify your email address:
     ${verificationUrl}
   `;
-  await email.sendEmail({
+  email.sendEmail({
     from: process.env.EMAIL,
     to: req.body.email,
     subject: 'Verify your email for Shufflr',
     text: emailContent,
+  }, (err) => {
+    if (err) {
+      account.deleteUser(req.body);
+    }
   });
   return res.status(200).json({
     body: 'Successfully created account',
@@ -75,7 +79,7 @@ async function forgotPassword(req, res) {
     
     If you did not request a password reset you can safely ignore this email.
   `;
-  await email.sendEmail({
+  email.sendEmail({
     from: process.env.EMAIL,
     to: req.body.email,
     subject: 'Reset Password Link for Shufflr',

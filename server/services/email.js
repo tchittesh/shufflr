@@ -1,5 +1,6 @@
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const {promisify} = require('util');
 // const {google} = require('googleapis');
 
 
@@ -54,10 +55,9 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD,
   },
 });
+transporter.sendMail = transporter.sendMail.bind(transporter);
 
-const sendEmail = (messageOptions) => {
-  transporter.sendMail(messageOptions);
-};
+const sendEmail = transporter.sendMail;
 
 // EXAMPLE USAGE
 // sendEmail({

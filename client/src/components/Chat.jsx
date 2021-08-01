@@ -76,16 +76,18 @@ class Chat extends Component {
             </span>
           </Row>
           <div className="chat-message">
-            {messages.map((i) => {
+            {messages.map((i, idx) => {
               if (i.email !== email) {
                 return (
-                  <div className="message">
+                  // eslint-disable-next-line react/no-array-index-key
+                  <div className="message" key={idx}>
                     <p>{i.text}</p>
                   </div>
                 );
               }
               return (
-                <div className="message mess-right">
+                // eslint-disable-next-line react/no-array-index-key
+                <div className="message mess-right" key={idx}>
                   <p>{i.text}</p>
                 </div>
               );
@@ -112,7 +114,7 @@ class Chat extends Component {
 }
 Chat.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  onTermination: PropTypes.object.isRequired,
+  onTermination: PropTypes.func.isRequired,
   partner: PropTypes.string.isRequired,
 };
 

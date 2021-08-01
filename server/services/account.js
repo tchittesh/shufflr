@@ -32,6 +32,12 @@ async function createUser(user) {
   return emailToken;
 }
 
+async function deleteUser(user) {
+  await mysqlHelper.pool.execute(
+      'DELETE FROM user WHERE email=?',
+      [user.email]);
+}
+
 async function verifyEmail(emailToken) {
   await mysqlHelper.pool.execute(
       'UPDATE user SET verified = true WHERE emailToken = ?',
@@ -69,6 +75,7 @@ async function changePassword(resetPasswordToken, newPassword) {
 module.exports.findUserByEmail = mysqlHelper.handleFatalErrors(findUserByEmail);
 module.exports.emailExists = mysqlHelper.handleFatalErrors(emailExists);
 module.exports.createUser = mysqlHelper.handleFatalErrors(createUser);
+module.exports.deleteUser = mysqlHelper.handleFatalErrors(deleteUser);
 module.exports.verifyEmail = mysqlHelper.handleFatalErrors(verifyEmail);
 module.exports.setResetPasswordToken =
   mysqlHelper.handleFatalErrors(setResetPasswordToken);

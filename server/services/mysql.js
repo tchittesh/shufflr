@@ -32,11 +32,13 @@ function alertIfFatalError(err) {
     to: 'tchittesh@gmail.com',
     subject: 'DATABASE FATAL ERROR',
     text: errorMsg,
-  }).then(
-      () => console.log('FATAL database error. Email sent successfully.'),
-  ).catch(
-      () => console.log('FATAL database error. Email failed to send.'),
-  );
+  }, (err) => {
+    if (err) {
+      console.log('FATAL database error. Email failed to send.');
+    } else {
+      console.log('FATAL database error. Email sent successfully.');
+    }
+  });
 }
 
 const handleFatalErrors = (fn) => (...args) =>
