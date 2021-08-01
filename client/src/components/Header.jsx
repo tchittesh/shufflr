@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import logo from '../assets/logo.png';
 
 import './Header.css';
@@ -18,6 +19,9 @@ class Header extends PureComponent {
               height="75"
             />
           </Link>
+          <Button variant="primary" type="button" className="topPadded">
+            Log Out
+          </Button>
         </Navbar.Brand>
       </Navbar>
     );

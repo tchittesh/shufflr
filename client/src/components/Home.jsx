@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
+import { GiCancel } from 'react-icons/gi';
 
 import Chat from './Chat';
 import { accountService, socket } from '../services';
@@ -97,9 +98,9 @@ class Home extends Component {
               {email}
             </h1>
             <Row>
-              <Button variant="primary" type="button" className="topPadded" onClick={Home.cancelSearch}>
+              <Button variant="primary" type="button" className="topPadded">
                 <Spinner animation="border" variant="light" />
-                Cancel
+                <GiCancel style={{ fontSize: 20, marginTop: 6, float: 'right' }} onClick={Home.cancelSearch} />
               </Button>
             </Row>
           </Col>
