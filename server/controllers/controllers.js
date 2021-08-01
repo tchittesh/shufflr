@@ -55,6 +55,9 @@ async function createAccount(req, res) {
     if (err) {
       account.deleteUser(req.body);
     }
+    return res.status(500).json({
+      body: 'Failed to send email',
+    });
   });
   return res.status(200).json({
     body: 'Successfully created account',
