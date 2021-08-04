@@ -68,14 +68,7 @@ function removeFromPool(email) {
 }
 
 function initialize(server, sessionMiddleware) {
-  const socketOptions = {
-    cors: {
-      origin: 'http://localhost:3000',
-      methods: ['GET', 'POST'],
-      credentials: true,
-    },
-  };
-  const io = socket(server, socketOptions)
+  const io = socket(server)
       .use(function(socket, next) {
         sessionMiddleware(socket.request, {}, next);
       });

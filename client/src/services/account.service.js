@@ -2,27 +2,26 @@ import axios from 'axios';
 import { BehaviorSubject } from 'rxjs';
 
 const userSubject = new BehaviorSubject(null);
-const baseUrl = 'http://localhost:5000';
 
 function createAccount(params) {
-  return axios.post(`${baseUrl}/api/create-account`, params);
+  return axios.post('/api/create-account', params);
 }
 
 function login(params) {
-  return axios.post(`${baseUrl}/api/login`, params, { withCredentials: true })
+  return axios.post('/api/login', params, { withCredentials: true })
     .then(() => userSubject.next(params.email));
 }
 
 function verifyEmail(token) {
-  return axios.post(`${baseUrl}/api/verify-email/${token}`);
+  return axios.post(`/api/verify-email/${token}`);
 }
 
 function forgotPassword(email) {
-  return axios.post(`${baseUrl}/api/forgot-password/`, { email });
+  return axios.post('/api/forgot-password/', { email });
 }
 
 function resetPassword(params) {
-  return axios.post(`${baseUrl}/api/reset-password/`, params);
+  return axios.post('/api/reset-password/', params);
 }
 
 // eslint-disable-next-line import/prefer-default-export

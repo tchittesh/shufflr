@@ -1,8 +1,6 @@
 // Import dependencies
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
 const mysqlHelper = require('./services/mysql');
@@ -40,9 +38,6 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true,
 }));
-
-// Set up the CORs middleware
-app.use(cors({origin: 'http://localhost:3000', credentials: true}));
 
 // Require Route
 const api = require('./routes/routes');
