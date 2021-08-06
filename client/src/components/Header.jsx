@@ -11,17 +11,22 @@ class Header extends PureComponent {
     return (
       <Navbar bg="primary" variant="primary" fixed="top" className="justify-content-center">
         <Navbar.Brand className="mx-auto">
-          <Link to="/">
-            <img
-              alt="Shufflr"
-              src={logo}
-              className="img-fluid-vertical mx-auto d-block"
-              height="75"
-            />
-          </Link>
-          <Button variant="primary" type="button" className="topPadded">
-            Log Out
-          </Button>
+          <div className="flex flex-row justify-between">
+            <div style={{ width: 100 }}>
+              Placeholder
+            </div>
+            <Link to="/">
+              <img
+                alt="Shufflr"
+                src={logo}
+                className="img-fluid-vertical mx-auto d-block"
+                height="75"
+              />
+            </Link>
+            <Button variant="primary" type="button" className="topPadded" style={{ width: 100 }}>
+              Log Out
+            </Button>
+          </div>
         </Navbar.Brand>
       </Navbar>
     );
