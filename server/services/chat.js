@@ -68,7 +68,7 @@ function removeFromPool(email) {
 }
 
 function initialize(server, sessionMiddleware) {
-  const io = socket(server)
+  const io = socket(server, {path: '/api/socket.io'})
       .use(function(socket, next) {
         sessionMiddleware(socket.request, {}, next);
       });
