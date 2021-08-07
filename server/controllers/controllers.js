@@ -46,22 +46,24 @@ async function createAccount(req, res) {
     Please click the below link to verify your email address:
     ${verificationUrl}
   `;
-  email.sendEmail({
+  return await email.sendEmail({
     from: process.env.EMAIL,
     to: req.body.email,
     subject: 'Verify your email for Shufflr',
     text: emailContent,
-  }, (err) => {
-    if (err) {
-      account.deleteUser(req.body);
-    }
-    return res.status(500).json({
-      body: 'Failed to send email',
-    });
-  });
-  return res.status(200).json({
-    body: 'Successfully created account',
-  });
+  }).then(
+      () => res.status(200).json({
+        body: 'Successfully created account',
+      }),
+  ).catch(
+      (err) => {
+        console.log(err);
+        account.deleteUser(req.body);
+        return res.status(500).json({
+          body: 'Failed to send email',
+        });
+      },
+  );
 }
 
 async function forgotPassword(req, res) {
