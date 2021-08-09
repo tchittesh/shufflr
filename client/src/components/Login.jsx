@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import * as Yup from 'yup';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -20,6 +21,17 @@ class Login extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetFailed = this.resetFailed.bind(this);
+
+    this.validationSchema = Yup.object().shape({
+      email: Yup.string()
+        .email('Email is invalid')
+        .matches(/^.+@((andrew.cmu)|(princeton)).edu$/,
+          'Invalid school domain (requires andrew.cmu.edu or princeton.edu)')
+        .required('Email is required'),
+      password: Yup.string()
+        .min(8, 'Password must be at least 8 characters')
+        .required('Password is required'),
+    });
   }
 
   handleEmailChange(event) {
@@ -33,14 +45,21 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
+    const form = { email, password };
     const { history } = this.props;
-    accountService.login({ email, password })
-      .then((response) => {
-        console.log(response);
-        console.log(history);
-        history.push('/home');
-        console.log(history);
-        console.log(accountService.emailAddress);
+    this.validationSchema.validate(form)
+      .then(() => {
+        accountService.login({ email, password })
+          .then((response) => {
+            console.log(response);
+            console.log(history);
+            history.push('/home');
+            console.log(history);
+            console.log(accountService.emailAddress);
+          })
+          .catch(() => {
+            this.setState({ failed: true });
+          });
       })
       .catch(() => {
         this.setState({ failed: true });
