@@ -15,12 +15,15 @@ import './base.css';
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', failed: false };
+    this.state = {
+      email: '', password: '', failed: false, status: '',
+    };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetFailed = this.resetFailed.bind(this);
+    this.resetStatus = this.resetStatus.bind(this);
 
     this.validationSchema = Yup.object().shape({
       email: Yup.string()
@@ -66,12 +69,15 @@ class Login extends Component {
       });
   }
 
-  resetFailed() {
+  resetFailedAndStatus() {
     this.setState({ failed: false });
+    this.setState({ status: '' });
   }
 
   render() {
-    const { email, password, failed } = this.state;
+    const {
+      email, password, failed, status,
+    } = this.state;
     return (
       <Col md="5">
         <Card className="text-center">
@@ -126,12 +132,11 @@ class Login extends Component {
             </Row>
           </Card.Body>
         </Card>
-        {failed
-              && (
-              <Alert variant="danger" dismissible className="topMargin" onClose={this.resetFailed}>
-                Login failed.
-              </Alert>
-              )}
+        {failed && status !== '' && (
+          <Alert variant="danger" dismissible className="topMargin" onClose={this.resetFailed}>
+            {status}
+          </Alert>
+        )}
       </Col>
     );
   }
