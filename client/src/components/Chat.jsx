@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { accountService, socket } from '../services';
+import { socket } from '../services';
 import './Chat.scss';
 
 class Chat extends Component {
@@ -14,6 +14,7 @@ class Chat extends Component {
     this.state = { text: '', messages: [] };
     this.messagesEndRef = React.createRef();
     this.onTermination = props.onTermination;
+    this.email = props.email;
     this.matchedEmail = props.partner;
 
     this.sendMsg = this.sendMsg.bind(this);
@@ -39,10 +40,9 @@ class Chat extends Component {
     const { text } = this.state;
     if (text !== '') {
       socket.emit('send', text);
-      const email = accountService.emailAddress;
       const { messages } = this.state;
       messages.push({
-        email,
+        email: this.email,
         text,
       });
       this.setState({ text: '', messages });
@@ -55,7 +55,6 @@ class Chat extends Component {
   }
 
   render() {
-    const email = accountService.emailAddress;
     const { text, messages } = this.state;
 
     return (
@@ -67,7 +66,7 @@ class Chat extends Component {
                 Back
               </Button>
               <h4>
-                {email}
+                {this.email}
                 {' '}
                 chatting with
                 {' '}
@@ -77,7 +76,7 @@ class Chat extends Component {
           </Row>
           <div className="chat-message">
             {messages.map((i, idx) => {
-              if (i.email !== email) {
+              if (i.email !== this.email) {
                 return (
                   // eslint-disable-next-line react/no-array-index-key
                   <div className="message" key={idx}>
@@ -115,6 +114,7 @@ class Chat extends Component {
 Chat.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   onTermination: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
   partner: PropTypes.string.isRequired,
 };
 

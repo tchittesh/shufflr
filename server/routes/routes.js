@@ -6,7 +6,15 @@ const router = express.Router();
 
 router.post(
     '/login', passport.authenticate('local'),
-    (req, res) => res.status(200).json({body: 'Hello from the server!'}));
+    (_, res) => res.status(200).end());
+router.get('/check-cookie', controllers.checkCookie);
+router.get(
+    '/logout', passport.authenticate('local'),
+    (req, res) => {
+      console.log(req);
+      req.logout();
+      res.status(200).end();
+    });
 router.post('/create-account', controllers.createAccount);
 router.post('/verify-email/:emailToken', controllers.verifyEmail);
 router.post('/forgot-password', controllers.forgotPassword);

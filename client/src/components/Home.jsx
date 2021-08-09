@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { GiCancel } from 'react-icons/gi';
 
 import Chat from './Chat';
-import { accountService, socket } from '../services';
+import { socket } from '../services';
 import './base.css';
 
 class Home extends Component {
@@ -62,13 +62,7 @@ class Home extends Component {
   }
 
   render() {
-    const email = accountService.emailAddress;
-
-    if (!email) {
-      console.log('no email');
-      const { history } = this.props;
-      history.push('/login');
-    }
+    const { email } = this.props;
 
     const { status, matchedEmail } = this.state;
     console.log(matchedEmail);
@@ -108,7 +102,7 @@ class Home extends Component {
       case this.statusSet.CHATTING:
         return (
           <Col md="8" className="justify-content-center align-items-center">
-            <Chat partner={matchedEmail} onTermination={Home.stopChat} />
+            <Chat email={email} partner={matchedEmail} onTermination={Home.stopChat} />
           </Col>
         );
       default:
@@ -117,8 +111,7 @@ class Home extends Component {
   }
 }
 Home.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  history: PropTypes.object.isRequired,
+  email: PropTypes.string.isRequired,
 };
 
 export default Home;

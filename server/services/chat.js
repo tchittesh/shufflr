@@ -68,23 +68,36 @@ function removeFromPool(email) {
 }
 
 function initialize(server, sessionMiddleware) {
-  const io = socket(server, {path: '/api/socket.io'})
-      .use(function(socket, next) {
-        sessionMiddleware(socket.request, {}, next);
-      });
+  const io = socket(server, {path: '/api/socket.io'});
+
+  io.use(function(socket, next) {
+    sessionMiddleware(socket.request, {}, next);
+  });
+
+  io.use((socket, next) => {
+    if (!socket.request || !socket.request.session ||
+      !socket.request.session.passport ||
+      !socket.request.session.passport.user) {
+      console.log('unauthorized', socket.request);
+      next(new Error('unauthorized'));
+    } else {
+      console.log('fine', socket.request);
+      next();
+    }
+  });
 
   // everything related to io will go here
   io.on('connection', (socket) => {
-    console.log('connected');
     debugPrintAll();
     // when new user join room
     if (!socket.request || !socket.request.session ||
       !socket.request.session.passport ||
       !socket.request.session.passport.user) {
-      console.log('no auth', socket);
+      console.log('no auth socket');
       return;
     }
     const email = socket.request.session.passport.user;
+    console.log('connected', email);
     emailToSocket.set(email, socket);
 
     socket.on('search', () => {

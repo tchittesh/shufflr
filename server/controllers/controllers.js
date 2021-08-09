@@ -110,7 +110,19 @@ async function resetPassword(req, res) {
   return res.status(200).end();
 }
 
+function checkCookie(req, res) {
+  const email = req?.user?.email;
+  if (email) {
+    return res.status(200).json({
+      email,
+    });
+  } else {
+    return res.status(401).end();
+  }
+}
+
 module.exports.createAccount = handleErrors(createAccount);
 module.exports.verifyEmail = handleErrors(verifyEmail);
 module.exports.forgotPassword = handleErrors(forgotPassword);
 module.exports.resetPassword = handleErrors(resetPassword);
+module.exports.checkCookie = handleErrors(checkCookie);

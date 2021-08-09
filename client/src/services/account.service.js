@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { BehaviorSubject } from 'rxjs';
 
-const userSubject = new BehaviorSubject(null);
+import { socket } from './socket';
+
+const emailObservable = new BehaviorSubject(null);
 
 function createAccount(params) {
   return axios.post('/api/create-account', params);
@@ -9,7 +11,25 @@ function createAccount(params) {
 
 function login(params) {
   return axios.post('/api/login', params, { withCredentials: true })
-    .then(() => userSubject.next(params.email));
+    .then(() => {
+      socket.connect();
+      console.log('tried to reconnect socket');
+      emailObservable.next(params.email);
+      console.log(params.email);
+    });
+}
+
+function logout() {
+  return axios.get('/api/logout', { withCredentials: true })
+    .then(() => emailObservable.next(null));
+}
+
+function checkCookie() {
+  return axios.get('/api/check-cookie', { withCredentials: true })
+    .then((res) => {
+      socket.connect();
+      emailObservable.next(res.data.email);
+    });
 }
 
 function verifyEmail(token) {
@@ -27,7 +47,8 @@ function resetPassword(params) {
 // eslint-disable-next-line import/prefer-default-export
 export const accountService = {
   login,
-  // logout,
+  checkCookie,
+  logout,
   createAccount,
   verifyEmail,
   forgotPassword,
@@ -37,6 +58,6 @@ export const accountService = {
   // create,
   // update,
   // delete: _delete,
-  // user: userSubject.asObservable(),
-  get emailAddress() { return userSubject.value; },
+  emailObservable,
+  get emailAddress() { return emailObservable.value; },
 };

@@ -1,6 +1,6 @@
-$theme-colors: (
-    "primary": indigo,
-    "purple": purple,
+$primary: indigo;
+$custom-colors: (
+  "purple": purple,
 );
 
 $link-decoration: none !default;
@@ -8,3 +8,6 @@ $link-color: lighten(blueviolet, 10%);
 
 /* import bootstrap to set changes */
 @import "~bootstrap/scss/bootstrap";
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);

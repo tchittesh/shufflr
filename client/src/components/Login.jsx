@@ -37,7 +37,10 @@ class Login extends Component {
     accountService.login({ email, password })
       .then((response) => {
         console.log(response);
+        console.log(history);
         history.push('/home');
+        console.log(history);
+        console.log(accountService.emailAddress);
       })
       .catch(() => {
         this.setState({ failed: true });
