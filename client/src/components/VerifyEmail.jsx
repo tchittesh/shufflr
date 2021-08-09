@@ -16,7 +16,7 @@ class VerifyEmail extends Component {
     accountService.verifyEmail(match.params.token)
       .then((response) => {
         console.log(response);
-        this.setState({ message: response.statusText, responseVerify: false });
+        this.setState({ message: 'Your email has now been verified, happy chatting :)', responseVerify: false });
       }).catch(() => {
         this.setState({ message: 'Authentication Failed', responseVerify: false });
       });
@@ -36,10 +36,11 @@ class VerifyEmail extends Component {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          onClick={() => this.setState({ modalShow: false })}
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Modal heading
+              Email Verification
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -51,6 +52,7 @@ class VerifyEmail extends Component {
             <Button
               onClick={() => this.setState({ modalShow: false })}
               disabled={responseVerify}
+              style={{ backgroundColor: 'purple' }}
             >
               Close
             </Button>
