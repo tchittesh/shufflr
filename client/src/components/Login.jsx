@@ -22,8 +22,7 @@ class Login extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.resetFailed = this.resetFailed.bind(this);
-    this.resetStatus = this.resetStatus.bind(this);
+    this.resetFailedAndStatus = this.resetFailedAndStatus.bind(this);
 
     this.validationSchema = Yup.object().shape({
       email: Yup.string()
