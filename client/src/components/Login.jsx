@@ -53,12 +53,8 @@ class Login extends Component {
     this.validationSchema.validate(form)
       .then(() => {
         accountService.login({ email, password })
-          .then((response) => {
-            console.log(response);
-            console.log(history);
+          .then(() => {
             history.push('/home');
-            console.log(history);
-            console.log(accountService.emailAddress);
           })
           .catch(() => {
             this.setState({ failed: true });

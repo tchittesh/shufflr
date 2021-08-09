@@ -25,8 +25,7 @@ class ForgotPassword extends Component {
     event.preventDefault();
     const { email } = this.state;
     accountService.forgotPassword(email)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         this.setState({ message: 'Sent an email with reset password instructions.' });
       })
       .catch(() => {

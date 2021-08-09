@@ -38,8 +38,7 @@ class ResetPassword extends Component {
     this.validationSchema.validate(form)
       .then(() => {
         accountService.resetPassword(form)
-          .then((response) => {
-            console.log(response);
+          .then(() => {
             this.setState({ status: ['Password changed.', 'success'] });
           })
           .catch(() => {

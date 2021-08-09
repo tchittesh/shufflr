@@ -29,7 +29,6 @@ class App extends Component {
       .then(() => this.setState({ cookieChecked: true }))
       .catch(() => this.setState({ cookieChecked: true }));
     this.subscription = accountService.emailObservable.subscribe((email) => {
-      console.log('listening...', email);
       this.setState({ email });
     });
   }

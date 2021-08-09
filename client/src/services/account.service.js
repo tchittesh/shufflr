@@ -12,10 +12,9 @@ function createAccount(params) {
 function login(params) {
   return axios.post('/api/login', params, { withCredentials: true })
     .then(() => {
+      socket.disconnect();
       socket.connect();
-      console.log('tried to reconnect socket');
       emailObservable.next(params.email);
-      console.log(params.email);
     });
 }
 
@@ -27,6 +26,7 @@ function logout() {
 function checkCookie() {
   return axios.get('/api/check-cookie', { withCredentials: true })
     .then((res) => {
+      socket.disconnect();
       socket.connect();
       emailObservable.next(res.data.email);
     });

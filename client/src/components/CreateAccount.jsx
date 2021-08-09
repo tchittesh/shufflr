@@ -49,8 +49,7 @@ class CreateAccount extends Component {
     this.validationSchema.validate(form)
       .then(() => {
         accountService.createAccount(form)
-          .then((response) => {
-            console.log(response);
+          .then(() => {
             this.setState({ status: ['Registration successful, please check your email for verification instructions', 'success'] });
           })
           .catch((error) => {

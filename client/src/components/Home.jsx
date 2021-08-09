@@ -65,7 +65,6 @@ class Home extends Component {
     const { email } = this.props;
 
     const { status, matchedEmail } = this.state;
-    console.log(matchedEmail);
 
     switch (status) {
       case this.statusSet.DEFAULT:

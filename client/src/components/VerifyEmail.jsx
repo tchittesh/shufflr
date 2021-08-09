@@ -9,22 +9,21 @@ class VerifyEmail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      verified: false, modalShow: true, responseVerify: true, message: 'Verifying your email...',
+      verified: false, modalShow: true, responseVerified: false, message: 'Verifying your email...',
     };
 
     const { match } = this.props;
     accountService.verifyEmail(match.params.token)
-      .then((response) => {
-        console.log(response);
-        this.setState({ message: 'Your email has now been verified, happy chatting :)', responseVerify: false });
+      .then(() => {
+        this.setState({ message: 'Your email has now been verified, happy chatting :)', responseVerified: true });
       }).catch(() => {
-        this.setState({ message: 'Authentication Failed', responseVerify: false });
+        this.setState({ message: 'Authentication Failed', responseVerified: true });
       });
   }
 
   render() {
     const {
-      verified, message, modalShow, responseVerify,
+      verified, message, modalShow, responseVerified,
     } = this.state;
     if (verified) {
       return <Redirect to="/chat" />;
@@ -51,7 +50,7 @@ class VerifyEmail extends Component {
           <Modal.Footer>
             <Button
               onClick={() => this.setState({ modalShow: false })}
-              disabled={responseVerify}
+              disabled={!responseVerified}
               style={{ backgroundColor: 'purple' }}
             >
               Close

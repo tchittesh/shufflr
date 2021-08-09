@@ -78,10 +78,10 @@ function initialize(server, sessionMiddleware) {
     if (!socket.request || !socket.request.session ||
       !socket.request.session.passport ||
       !socket.request.session.passport.user) {
-      console.log('unauthorized', socket.request);
+      console.log('unauthorized', socket.request.rawHeaders);
       next(new Error('unauthorized'));
     } else {
-      console.log('fine', socket.request);
+      console.log('fine', socket.request.rawHeaders);
       next();
     }
   });

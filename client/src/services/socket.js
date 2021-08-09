@@ -6,17 +6,10 @@ export const socket = io({
   withCredentials: true,
 });
 
-// client-side
-socket.on('connect_error', (err) => {
-  // setTimeout(() => {
-  //   socket.connect();
-  // }, 500);
-  console.log('connect error'); // true
-  console.log(err instanceof Error); // true
-  console.log(err.message); // not authorized
-  console.log(err.data); // { content: "Please retry later" }
-});
-
-setInterval(() => {
-  console.log('cookies', document.cookie);
-}, 500);
+// socket.on('connect_error', (err) => {
+//   setTimeout(() => {
+//     socket.disconnect();
+//     socket.connect();
+//   }, 500);
+//   console.log(err.message);
+// });
