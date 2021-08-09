@@ -7,6 +7,8 @@ const email = require('../services/email');
 const validationSchema = Yup.object().shape({
   email: Yup.string()
       .email('Email is invalid')
+      .matches(/^.+@((andrew.cmu)|(princeton)).edu$/,
+          'Invalid school domain (requires andrew.cmu.edu or princeton.edu)')
       .required('Email is required'),
   password: Yup.string()
       .min(8, 'Password must be at least 8 characters')
