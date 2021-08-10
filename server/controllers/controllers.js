@@ -121,8 +121,19 @@ function checkCookie(req, res) {
   }
 }
 
+function logOut(req, res) {
+  if (!req || !req.logOut || !req.session || !req.session.destroy) {
+    return res.status(401).end();
+  }
+  req.logOut();
+  req.session.destroy((err) => {
+    res.clearCookie('connect.sid').end();
+  });
+}
+
 module.exports.createAccount = handleErrors(createAccount);
 module.exports.verifyEmail = handleErrors(verifyEmail);
 module.exports.forgotPassword = handleErrors(forgotPassword);
 module.exports.resetPassword = handleErrors(resetPassword);
 module.exports.checkCookie = handleErrors(checkCookie);
+module.exports.logOut = handleErrors(logOut);

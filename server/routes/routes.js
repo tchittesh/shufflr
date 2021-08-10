@@ -8,13 +8,7 @@ router.post(
     '/login', passport.authenticate('local'),
     (_, res) => res.status(200).end());
 router.get('/check-cookie', controllers.checkCookie);
-router.get(
-    '/logout', passport.authenticate('local'),
-    (req, res) => {
-      console.log(req);
-      req.logout();
-      res.status(200).end();
-    });
+router.get('/logout', controllers.logOut);
 router.post('/create-account', controllers.createAccount);
 router.post('/verify-email/:emailToken', controllers.verifyEmail);
 router.post('/forgot-password', controllers.forgotPassword);

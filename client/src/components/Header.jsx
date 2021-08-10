@@ -1,14 +1,39 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import logo from '../assets/logo.png';
 
+import logo from '../assets/logo.png';
+import { accountService } from '../services';
 import './Header.css';
 
-class Header extends PureComponent {
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loggingOut: false };
+
+    this.logOut = this.logOut.bind(this);
+  }
+
+  logOut() {
+    const { loggingOut } = this.state;
+    if (loggingOut) {
+      return;
+    }
+    this.setState({ loggingOut: true });
+    accountService.logout()
+      .then(() => {
+        this.setState({ loggingOut: false });
+      })
+      .catch(() => {
+        // TODO: should we "log out" on the frontend even if the backend fails?
+        this.setState({ loggingOut: false });
+      });
+  }
+
   render() {
+    const { loggingOut } = this.state;
     const { email } = this.props;
 
     return (
@@ -31,6 +56,8 @@ class Header extends PureComponent {
               style={{
                 width: 100, float: 'right', marginRight: 20, backgroundColor: 'purple',
               }}
+              onClick={this.logOut}
+              disabled={loggingOut}
             >
               Log Out
             </Button>
