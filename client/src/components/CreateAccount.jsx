@@ -14,7 +14,9 @@ import './base.css';
 class CreateAccount extends Component {
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', status: ['', ''] };
+    this.state = {
+      email: '', password: '', status: ['', ''], responseVerified: true,
+    };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -48,12 +50,13 @@ class CreateAccount extends Component {
     const form = { email, password };
     this.validationSchema.validate(form)
       .then(() => {
+        this.setState({ responseVerified: false });
         accountService.createAccount(form)
           .then(() => {
-            this.setState({ status: ['Registration successful, please check your email for verification instructions', 'success'] });
+            this.setState({ status: ['Registration successful, please check your email for verification instructions', 'success'], responseVerified: true });
           })
           .catch((error) => {
-            this.setState({ status: [`Backend error, ${error}`, 'danger'] });
+            this.setState({ status: [`Backend error, ${error}`, 'danger'], responseVerified: true });
           });
       })
       .catch((err) => {
@@ -66,7 +69,9 @@ class CreateAccount extends Component {
   }
 
   render() {
-    const { email, password, status } = this.state;
+    const {
+      email, password, status, responseVerified,
+    } = this.state;
     const [message, alertType] = status;
     return (
       <Col md="5">
@@ -94,7 +99,7 @@ class CreateAccount extends Component {
                 />
                 <label htmlFor="floatingPasswordCustom">Password</label>
               </Form.Floating>
-              <Button variant="primary" type="submit" className="topMargin">
+              <Button variant="primary" type="submit" className="topMargin" disabled={!responseVerified}>
                 Sign up
               </Button>
             </Form>
