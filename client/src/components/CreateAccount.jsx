@@ -55,8 +55,8 @@ class CreateAccount extends Component {
           .then(() => {
             this.setState({ status: ['Registration successful, please check your email for verification instructions', 'success'], responseVerified: true });
           })
-          .catch((error) => {
-            this.setState({ status: [`Backend error, ${error}`, 'danger'], responseVerified: true });
+          .catch(() => {
+            this.setState({ status: ['Registration failed', 'danger'], responseVerified: true });
           });
       })
       .catch((err) => {
