@@ -5,8 +5,6 @@
 }
 
 .button-link {
-    background-color: white;
-    color: indigo;
     padding: 5px;
     margin-top: 15px;
 
@@ -17,4 +15,5 @@
     color: white;
     text-shadow: 2px 2px indigo;
     font-size: 90px;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }

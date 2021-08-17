@@ -44,6 +44,7 @@ class App extends Component {
       return (
         <div className="App">
           <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Amaranth" />
+          <link rel="stylesheet" type="text/css" href="https://use.typekit.net/oov2wcw.css" />
           <Router>
             <Header className="vh-15" email={email} />
             <Container className="main-content min-vh-85 App">
