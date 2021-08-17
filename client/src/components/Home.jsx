@@ -31,6 +31,8 @@ class Home extends Component {
       CHATTING: 'chatting',
     };
     this.state = { status: this.statusSet.DEFAULT, matchedEmail: null };
+    socket.disconnect();
+    socket.connect();
   }
 
   componentDidMount() {
@@ -59,6 +61,7 @@ class Home extends Component {
     socket.removeAllListeners('cancelReceived');
     socket.removeAllListeners('exitReceived');
     socket.removeAllListeners('partnerDisconnected');
+    socket.disconnect();
   }
 
   render() {

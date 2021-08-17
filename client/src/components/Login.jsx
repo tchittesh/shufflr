@@ -56,17 +56,16 @@ class Login extends Component {
             history.push('/home');
           })
           .catch(() => {
-            this.setState({ failed: true });
+            this.setState({ failed: true, status: 'Login failed' });
           });
       })
-      .catch(() => {
-        this.setState({ failed: true });
+      .catch((err) => {
+        this.setState({ failed: true, status: err.errors });
       });
   }
 
   resetFailedAndStatus() {
-    this.setState({ failed: false });
-    this.setState({ status: '' });
+    this.setState({ failed: false, status: '' });
   }
 
   render() {
