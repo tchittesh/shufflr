@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -15,9 +15,9 @@ class VerifyEmail extends Component {
     const { match } = this.props;
     accountService.verifyEmail(match.params.token)
       .then(() => {
-        this.setState({ message: 'Your email has now been verified, happy chatting :)', responseVerified: true });
+        this.setState({ verified: true, message: 'Your email has now been verified, happy chatting :)', responseVerified: true });
       }).catch(() => {
-        this.setState({ message: 'Authentication Failed', responseVerified: true });
+        this.setState({ message: 'Email verification failed', responseVerified: true });
       });
   }
 
@@ -25,9 +25,6 @@ class VerifyEmail extends Component {
     const {
       verified, message, modalShow, responseVerified,
     } = this.state;
-    if (verified) {
-      return <Redirect to="/chat" />;
-    }
     return (
       <div>
         <Modal
@@ -47,15 +44,35 @@ class VerifyEmail extends Component {
               {message}
             </p>
           </Modal.Body>
-          <Modal.Footer>
-            <Button
-              onClick={() => this.setState({ modalShow: false })}
-              disabled={!responseVerified}
-              style={{ backgroundColor: 'purple' }}
-            >
-              Close
-            </Button>
-          </Modal.Footer>
+          {
+            responseVerified && !verified
+            && (
+            <Modal.Footer>
+              <Button
+                onClick={() => this.setState({ modalShow: false })}
+                disabled={!responseVerified}
+                style={{ backgroundColor: 'purple' }}
+              >
+                Close
+              </Button>
+            </Modal.Footer>
+            )
+          }
+          {
+            responseVerified && verified
+            && (
+            <Modal.Footer>
+              <Link to="/login">
+                <Button
+                  disabled={!responseVerified}
+                  style={{ backgroundColor: 'purple' }}
+                >
+                  Log In
+                </Button>
+              </Link>
+            </Modal.Footer>
+            )
+          }
         </Modal>
       </div>
     );

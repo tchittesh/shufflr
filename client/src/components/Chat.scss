@@ -40,6 +40,9 @@ $yellowColor: #ffac41;
   height: 100%;
   background-color: $translucentWhite;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   .user-name {
     text-align: start;
     width: 100%;
