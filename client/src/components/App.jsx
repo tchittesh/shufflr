@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route, Redirect,
+  BrowserRouter as Router, // Switch, Route, Redirect,
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
-import Login from './Login';
-import CreateAccount from './CreateAccount';
-import Home from './Home';
-import VerifyEmail from './VerifyEmail';
-import ForgotPassword from './ForgotPassword';
-import ResetPassword from './ResetPassword';
+// import Login from './Login';
+// import CreateAccount from './CreateAccount';
+// import Home from './Home';
+// import VerifyEmail from './VerifyEmail';
+// import ForgotPassword from './ForgotPassword';
+// import ResetPassword from './ResetPassword';
 import Header from './Header';
 import Welcome from './Welcome';
 import { accountService } from '../services';
@@ -49,7 +49,8 @@ class App extends Component {
             <Header className="vh-15" email={email} />
             <Container className="main-content min-vh-85 App">
               <Row className="min-vh-85 justify-content-center align-items-center">
-                <Switch>
+                <Welcome />
+                {/* <Switch>
                   <Route exact path="/">
                     {email ? <Redirect to="/home" /> : <Welcome />}
                   </Route>
@@ -63,7 +64,7 @@ class App extends Component {
                   <Route path="/forgot-password" component={ForgotPassword} />
                   <Route path="/reset-password/:token" component={ResetPassword} />
                   <Route path="/verify-email/:token" component={VerifyEmail} />
-                </Switch>
+                </Switch> */}
               </Row>
             </Container>
           </Router>

@@ -1,14 +1,21 @@
-.title {
-    color: white;
-    
-    text-shadow: 2px 2px indigo;
-}
-
 .button-link {
     padding: 5px;
     margin-top: 15px;
-
     margin-right: 20px;
+}
+
+.intro-medium {
+    color: white;
+    font-size: 54px;
+    text-shadow: 2px 2px indigo;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+.intro-small {
+    color: white;
+    font-size: 20px;
+    text-shadow: 2px 2px indigo;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
 .intro {
@@ -16,4 +23,19 @@
     text-shadow: 2px 2px indigo;
     font-size: 90px;
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+.welcome-section {
+    margin-bottom: 50px;
+}
+
+.welcome-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.example-chat {
+    max-height: 70%;
+    width: auto;
 }

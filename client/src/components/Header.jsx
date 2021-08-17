@@ -50,11 +50,11 @@ class Header extends Component {
         {email
           ? (
             <Button
-              variant="primary"
+              variant="outline-light"
               type="button"
               className="topPadded"
               style={{
-                width: 100, float: 'right', marginRight: 20, backgroundColor: 'purple',
+                width: 100, float: 'right', marginRight: 20,
               }}
               onClick={this.logOut}
               disabled={loggingOut}
