@@ -79,7 +79,7 @@ class Home extends Component {
               {email}
             </h1>
             <Row>
-              <Button variant="primary" type="button" className="topPadded" onClick={Home.startSearch}>
+              <Button variant="light" type="button" className="topPadded" onClick={Home.startSearch}>
                 Start Chat
               </Button>
             </Row>
