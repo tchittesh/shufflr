@@ -45,17 +45,30 @@ async function createAccount(req, res) {
   const emailToken = await account.createUser(req.body);
   const verificationUrl =
     `${process.env.FRONTEND_BASE_URL}/verify-email/${emailToken}`;
-  const emailContent = `
-    Thanks for registering!
+  const altEmailContent = `
+    Thanks for registering for Shufflr!
     Please click the below link to verify your email address:
     ${verificationUrl}
   `;
-  return await email.sendEmail({
+  const templatePath =
+    path.join(__dirname, '../email_templates/verify_email.ejs');
+  const emailOptions = await ejs.renderFile(templatePath, {
+    verify_email_link: verificationUrl,
+  }).then((result) => ({
     from: process.env.EMAIL,
     to: req.body.email,
     subject: 'Verify your email for Shufflr',
-    text: emailContent,
-  }).then(
+    html: result,
+  })).catch(() => ({
+    from: process.env.EMAIL,
+    to: req.body.email,
+    subject: 'Verify your email for Shufflr',
+    text: altEmailContent,
+  }));
+
+  return await email.sendEmail(
+      emailOptions,
+  ).then(
       () => res.status(200).json({
         body: 'Successfully created account',
       }),

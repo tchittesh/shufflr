@@ -35,12 +35,31 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
-app.use('/api/static', express.static('public'));
-
 // Require Route
 const api = require('./routes/routes');
 // Configure app to use route
 app.use('/api/', api);
+app.use('/api/static', express.static('public'));
+const ejs = require('ejs');
+const path = require('path');
+
+app.get('/test', (req, res, next) => {
+  let emailTemplate;
+  ejs.renderFile(path.join(__dirname, 'email_templates/verify_email.ejs'),
+      {
+        verify_email_link: 'www.google.com',
+      })
+      .then((result) => {
+        emailTemplate = result;
+        res.send(emailTemplate);
+      })
+      .catch((err) => {
+        res.status(400).json({
+          message: 'Error Rendering emailTemplate',
+          error: err,
+        });
+      });
+});
 
 // Catch any bad requests
 app.get('*', (req, res) => {
@@ -52,3 +71,20 @@ const server =
   app.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
 
 chatSocket.initialize(server, sessionMiddleware);
+
+// const email = require('./services/email');
+// const emailContent = `
+// Thanks for registering!
+// Please click the below link to verify your email address:
+// asdfasdf:/asldkfjsldfkaj
+// `;
+// email.sendEmail({
+//   from: process.env.EMAIL,
+//   to: 'tchittesh@gmail.com',
+//   subject: 'Verify your email for Shufflr',
+//   text: emailContent,
+// }).catch(
+//     (err) => {
+//       console.log(err);
+//     },
+// );
