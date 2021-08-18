@@ -35,6 +35,8 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
+app.use('/static', express.static('public'));
+
 // Require Route
 const api = require('./routes/routes');
 // Configure app to use route

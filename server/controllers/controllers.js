@@ -1,5 +1,7 @@
 require('dotenv').config();
 const Yup = require('yup');
+const ejs = require('ejs');
+const path = require('path');
 
 const account = require('../services/account');
 const email = require('../services/email');
@@ -77,7 +79,7 @@ async function forgotPassword(req, res) {
     await account.setResetPasswordToken(req.body.email);
   const resetPasswordUrl =
     `${process.env.FRONTEND_BASE_URL}/reset-password/${resetPasswordToken}`;
-  const emailContent = `
+  const altEmailContent = `
     You're receiving this e-mail because you or someone else 
     has requested a password reset for your user account.
 
@@ -86,12 +88,23 @@ async function forgotPassword(req, res) {
     
     If you did not request a password reset you can safely ignore this email.
   `;
-  email.sendEmail({
+  const templatePath =
+    path.join(__dirname, '../email_templates/reset_password.ejs');
+  const emailOptions = await ejs.renderFile(templatePath, {
+    reset_password_link: resetPasswordUrl,
+  }).then((result) => ({
     from: process.env.EMAIL,
     to: req.body.email,
-    subject: 'Reset Password Link for Shufflr',
-    text: emailContent,
-  });
+    subject: 'Reset Password Request for Shufflr',
+    html: result,
+  })).catch(() => ({
+    from: process.env.EMAIL,
+    to: req.body.email,
+    subject: 'Reset Password Request for Shufflr',
+    text: altEmailContent,
+  }));
+
+  email.sendEmail(emailOptions);
   return res.status(200).end();
 }
 

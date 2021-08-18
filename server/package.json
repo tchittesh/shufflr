@@ -24,6 +24,7 @@
     "concurrently": "^5.2.0",
     "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
     "express": "^5.0.0-alpha.8",
     "express-mysql-session": "^2.1.6",
     "express-session": "^1.17.2",
