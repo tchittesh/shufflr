@@ -1,0 +1,92 @@
+.buttonLink {
+    padding: 5px;
+    margin-top: 30px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+
+.privacyLink {
+    padding: 5px;
+    margin-top: 15px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+
+
+.introSmall {
+    color: white;
+    font-size: 25px;
+    text-shadow: 2px 2px indigo;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+.introVerySmall {
+    color: white;
+    font-size: 18px;
+    text-shadow: 2px 2px indigo;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+}
+
+.introHome {
+    font-size: 45px;
+    color: white;
+    text-shadow: 2px 2px indigo;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    margin-bottom: 35px;
+}
+
+.welcome-section {
+    margin-bottom: 20px;
+}
+
+.welcomeCol {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    width: 65%;
+}
+
+.welcomeCol1 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 45px;
+    width: 35%;
+}
+
+.welcomeRow {
+   padding-top: 25px;
+}
+
+.Students {
+    width: 400px;
+    box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -moz-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -webkit-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -khtml-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    border-radius:15px;
+    -moz-border-radius:15px;
+    -webkit-border-radius:15px;
+}
+
+.Students1 {
+    width: 300px;
+    box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -moz-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -webkit-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -khtml-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    border-radius:15px;
+    -moz-border-radius:15px;
+    -webkit-border-radius:15px;
+    margin-top: -90px;
+    margin-left: 200px;
+}
+
+.email {
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    font-size: 18px; 
+    margin-top: 12px; 
+    margin-left: 10px; 
+    font-weight: 'lighter';
+    color: black;
+    
+}

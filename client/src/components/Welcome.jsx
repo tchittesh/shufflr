@@ -10,7 +10,7 @@ import exampleChat from '../assets/example_chat.png';
 class Welcome extends PureComponent {
   render() {
     return (
-      <Row>
+      <Row className="welcome-row">
         <Col className="welcome-col">
           <div className="welcome-section">
             <h1 className="intro">Chat with</h1>

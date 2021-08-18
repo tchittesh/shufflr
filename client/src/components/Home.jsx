@@ -4,11 +4,14 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
-import { GiCancel } from 'react-icons/gi';
+import { CgClose } from 'react-icons/cg';
+import { AiOutlineMail } from 'react-icons/ai';
 
 import Chat from './Chat';
 import { socket } from '../services';
 import './base.css';
+import './Home.css';
+import students from '../assets/students.jpeg';
 
 class Home extends Component {
   static startSearch() {
@@ -72,18 +75,65 @@ class Home extends Component {
     switch (status) {
       case this.statusSet.DEFAULT:
         return (
-          <Col md="5" className="justify-content-center align-items-center">
-            <h1 className="center-text white-text">
-              Welcome,
-              {' '}
-              {email}
-            </h1>
-            <Row>
-              <Button variant="light" type="button" className="topPadded" onClick={Home.startSearch}>
+          <Row className="welcomeRow">
+            <Col className="welcomeCol">
+              <h1 className="introHome">
+                Hello,
+                {' '}
+                {email}
+              </h1>
+              <div className="introSmall">
+                Chat Freely!
+                <br />
+                Meet new people,
+
+                Have fun :)
+              </div>
+              <Button variant="light" type="button" className="buttonLink" onClick={Home.startSearch}>
                 Start Chat
               </Button>
-            </Row>
-          </Col>
+              <Button variant="light" type="button" className="privacyLink">
+                Privacy Policy
+              </Button>
+              <div className="introVerySmall">
+                Please report any inappropriate behavior to this email:
+              </div>
+              <div
+                className="d-flex flex-row"
+                style={{
+                  backgroundColor: '#CBC3E3', width: 350, height: 50, borderRadius: 8, marginTop: 20,
+                }}
+              >
+
+                <div style={{
+                  width: 35, height: 35, backgroundColor: 'indigo', borderRadius: 40, marginLeft: -20, marginTop: 8, marginBottom: 10, border: 'solid', borderColor: 'white',
+                }}
+                >
+                  <AiOutlineMail style={{ marginLeft: 6, marginTop: 3, color: 'white' }} />
+                </div>
+
+                <div
+                  className="email"
+                >
+                  shufflr.app@gmail.com
+                </div>
+
+              </div>
+            </Col>
+            <Col className="welcomeCol1">
+              <img
+                alt="Students"
+                src={students}
+                className="Students"
+              />
+              <img
+                alt="Students1"
+                src={students}
+                className="Students1"
+              />
+            </Col>
+          </Row>
+
         );
       case this.statusSet.SEARCHING:
         return (
@@ -95,8 +145,8 @@ class Home extends Component {
             </h1>
             <Row>
               <Button variant="light" type="button" className="topPadded">
-                <Spinner animation="border" variant="light" />
-                <GiCancel style={{ fontSize: 20, marginTop: 6, float: 'right' }} onClick={Home.cancelSearch} />
+                <Spinner animation="border" variant="primary" />
+                <CgClose style={{ fontSize: 20, marginTop: 6, float: 'right' }} onClick={Home.cancelSearch} />
               </Button>
             </Row>
           </Col>
