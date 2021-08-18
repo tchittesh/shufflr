@@ -1,6 +1,8 @@
 const socket = require('socket.io');
 
-const searchPool = [];
+const searchPool = new Map();
+searchPool.set('andrew.cmu.edu', []);
+searchPool.set('princeton.edu', []);
 const emailToSocket = new Map();
 const matches = new Map();
 
@@ -20,23 +22,26 @@ function shuffle(array) {
 
 // try to match everybody every one second
 setInterval(() => {
-  if (searchPool.length < 2) {
-    return;
-  }
-  shuffle(searchPool);
-  while (searchPool.length > 1) {
-    const email1 = searchPool.pop();
-    const email2 = searchPool.pop();
-    matches.set(email1, email2);
-    matches.set(email2, email1);
-    emailToSocket.get(email1).emit('matchFound', {
-      email: email2,
-    });
-    emailToSocket.get(email2).emit('matchFound', {
-      email: email1,
-    });
-    console.log('after match', email1, email2);
-    debugPrintAll();
+  for (const item of searchPool) {
+    const searchList = item[1];
+    if (searchList.length < 2) {
+      return;
+    }
+    shuffle(searchList);
+    while (searchList.length > 1) {
+      const email1 = searchList.pop();
+      const email2 = searchList.pop();
+      matches.set(email1, email2);
+      matches.set(email2, email1);
+      emailToSocket.get(email1).emit('matchFound', {
+        email: email2,
+      });
+      emailToSocket.get(email2).emit('matchFound', {
+        email: email1,
+      });
+      console.log('after match', email1, email2);
+      debugPrintAll();
+    }
   }
 }, 1000);
 
@@ -50,8 +55,10 @@ function addToPool(email) {
   if (!emailToSocket.get(email)) {
     return;
   }
-  if (!searchPool.includes(email)) {
-    searchPool.push(email);
+  const emailDomain = email.split('@').pop();
+  if (searchPool.has(emailDomain) &&
+      !searchPool.get(emailDomain).includes(email)) {
+    searchPool.get(emailDomain).push(email);
   }
 }
 
@@ -59,9 +66,13 @@ function removeFromPool(email) {
   if (!emailToSocket.get(email)) {
     return false;
   }
-  const index = searchPool.findIndex((x) => x == email);
+  const emailDomain = email.split('@').pop();
+  if (!searchPool.has(emailDomain)) {
+    return false;
+  }
+  const index = searchPool.get(emailDomain).findIndex((x) => x == email);
   if (index != -1) {
-    searchPool.splice(index, 1);
+    searchPool.get(emailDomain).splice(index, 1);
     return true;
   }
   return false;

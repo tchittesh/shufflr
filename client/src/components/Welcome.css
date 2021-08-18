@@ -38,4 +38,11 @@
 .example-chat {
     max-height: 70%;
     width: auto;
+    box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -moz-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -webkit-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    -khtml-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    border-radius:15px;
+    -moz-border-radius:15px;
+    -webkit-border-radius:15px;
 }
