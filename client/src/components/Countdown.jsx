@@ -9,7 +9,7 @@ class Clock extends Component {
 
   constructor(props) {
     super(props);
-    this.deadline = 'August 18, 2021 20:00:00 EDT';
+    this.deadline = 'August 18, 2021 21:00:00 EDT';
     this.state = {
       days: 0,
       hours: 0,
