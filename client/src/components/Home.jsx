@@ -137,19 +137,65 @@ class Home extends Component {
         );
       case this.statusSet.SEARCHING:
         return (
-          <Col md="5" className="justify-content-center align-items-center">
-            <h1 className="center-text white-text">
-              Welcome,
-              {' '}
-              {email}
-            </h1>
-            <Row>
-              <Button variant="light" type="button" className="topPadded">
-                <Spinner animation="border" variant="primary" />
+          <Row className="welcomeRow">
+            <Col className="welcomeCol">
+              <h1 className="introHome">
+                Hello,
+                {' '}
+                {email}
+              </h1>
+              <div className="introSmall">
+                Chat Freely!
+                <br />
+                Meet new people,
+
+                Have fun :)
+              </div>
+              <Button variant="light" type="button" className="buttonLink">
+                <Spinner animation="border" variant="primary" style={{ fontSize: 10 }} />
                 <CgClose style={{ fontSize: 20, marginTop: 6, float: 'right' }} onClick={Home.cancelSearch} />
               </Button>
-            </Row>
-          </Col>
+              <Button variant="light" type="button" className="privacyLink">
+                Privacy Policy
+              </Button>
+              <div className="introVerySmall">
+                Please report any inappropriate behavior to this email:
+              </div>
+              <div
+                className="d-flex flex-row"
+                style={{
+                  backgroundColor: '#CBC3E3', width: 350, height: 50, borderRadius: 8, marginTop: 20,
+                }}
+              >
+
+                <div style={{
+                  width: 35, height: 35, backgroundColor: 'indigo', borderRadius: 40, marginLeft: -20, marginTop: 8, marginBottom: 10, border: 'solid', borderColor: 'white',
+                }}
+                >
+                  <AiOutlineMail style={{ marginLeft: 6, marginTop: 3, color: 'white' }} />
+                </div>
+
+                <div
+                  className="email"
+                >
+                  shufflr.app@gmail.com
+                </div>
+
+              </div>
+            </Col>
+            <Col className="welcomeCol1">
+              <img
+                alt="Students"
+                src={students}
+                className="Students"
+              />
+              <img
+                alt="Students1"
+                src={students}
+                className="Students1"
+              />
+            </Col>
+          </Row>
         );
       case this.statusSet.CHATTING:
         return (
