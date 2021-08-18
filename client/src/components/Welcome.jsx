@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 
 import './Welcome.css';
 import exampleChat from '../assets/example_chat.png';
+import students from '../assets/students.jpeg';
 
 class Welcome extends PureComponent {
   render() {
@@ -38,7 +39,12 @@ class Welcome extends PureComponent {
           <img
             alt="Example Chat"
             src={exampleChat}
-            className="example-chat mx-auto d-block"
+            className="example-chat"
+          />
+          <img
+            alt="Students"
+            src={students}
+            className="students"
           />
         </Col>
       </Row>

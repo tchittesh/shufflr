@@ -14,7 +14,7 @@
 .intro-small {
     color: white;
     font-size: 20px;
-    text-shadow: 2px 2px indigo;
+    text-shadow: 1.5px 1.5px indigo;
     font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
@@ -42,11 +42,25 @@
 
 .example-chat {
     width: 400px;
-    box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
-    -moz-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
-    -webkit-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
-    -khtml-box-shadow: 20px 30px 20px rgba(255,255,255, 0.8);
+    box-shadow: 15px 15px 20px rgba(255,255,255, 0.8);
+    -moz-box-shadow: 15px 15px 20px rgba(255,255,255, 0.8);
+    -webkit-box-shadow: 15px 15px 15px rgba(255,255,255, 0.8);
+    -khtml-box-shadow: 15px 15px 20px rgba(255,255,255, 0.8);
     border-radius:15px;
     -moz-border-radius:15px;
     -webkit-border-radius:15px;
+    margin-left: 60px;
+}
+
+.students {
+    width: 300px;
+    box-shadow: 15px 15px 20px rgba(255,255,255, 0.8);
+    -moz-box-shadow: 15px 15px 20px rgba(255,255,255, 0.8);
+    -webkit-box-shadow: 15px 15px 20px rgba(255,255,255, 0.8);
+    -khtml-box-shadow: 15px 15px 20px rgba(255,255,255, 0.8);
+    border-radius:15px;
+    -moz-border-radius:15px;
+    -webkit-border-radius:15px;
+    margin-top: -300px;
+    margin-left: 215px;
 }
