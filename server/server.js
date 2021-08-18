@@ -35,7 +35,7 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
-app.use('/static', express.static('public'));
+app.use('/api/static', express.static('public'));
 
 // Require Route
 const api = require('./routes/routes');
