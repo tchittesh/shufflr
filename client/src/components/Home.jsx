@@ -94,7 +94,7 @@ class Home extends Component {
               {email}
             </h1>
             <Row>
-              <Button variant="primary" type="button" className="topPadded">
+              <Button variant="light" type="button" className="topPadded">
                 <Spinner animation="border" variant="light" />
                 <GiCancel style={{ fontSize: 20, marginTop: 6, float: 'right' }} onClick={Home.cancelSearch} />
               </Button>
