@@ -24,4 +24,5 @@
 
 .white-text {
     color: white;
+    text-shadow: 2px 2px indigo;
 }
